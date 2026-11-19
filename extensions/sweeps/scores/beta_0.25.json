@@ -1,0 +1,53 @@
+{
+  "name": "beta_0.25",
+  "settings": {
+    "mu_from": "delta",
+    "beta": 0.25,
+    "lam": 1.0,
+    "lora_rank": 16,
+    "base_model": "Qwen/Qwen2.5-0.5B",
+    "num_epochs": 4,
+    "seed": 0
+  },
+  "majority_baseline": 126,
+  "topic_right": {
+    "English": 647,
+    "German": 558,
+    "French": 573,
+    "Spanish": 590,
+    "Chinese": 568
+  },
+  "language_score": 0.36,
+  "rec_per_token_en": 3.4707,
+  "rate_en": 15.315,
+  "generation_right_of_200": 87,
+  "generation_per_topic": {
+    "0": 5,
+    "1": 4,
+    "2": 7,
+    "3": 2,
+    "4": 9,
+    "5": 3,
+    "6": 6,
+    "7": 4,
+    "8": 0,
+    "9": 8,
+    "10": 1,
+    "11": 4,
+    "12": 3,
+    "13": 2,
+    "14": 6,
+    "15": 9,
+    "16": 6,
+    "17": 0,
+    "18": 0,
+    "19": 8
+  },
+  "held_out_loss_by_epoch": [
+    6.809,
+    5.335,
+    5.276,
+    5.27,
+    5.277
+  ]
+}

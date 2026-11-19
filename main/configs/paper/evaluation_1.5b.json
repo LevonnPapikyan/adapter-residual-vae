@@ -1,0 +1,9 @@
+{
+  "runs_dir": "../models/final_1.5b",
+  "base_model": "Qwen/Qwen2.5-1.5B",
+  "data_dir": "../data",
+  "baselines_dir": "../models/baselines",
+  "output_dir": "outputs/evaluation_1.5b",
+  "reference_results": "../figures/paper/qwen1.5b/results.json",
+  "seed": 0
+}

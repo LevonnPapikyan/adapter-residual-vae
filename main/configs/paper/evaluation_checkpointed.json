@@ -1,0 +1,9 @@
+{
+  "runs_dir": "outputs/checkpointed",
+  "base_model": "Qwen/Qwen2.5-0.5B",
+  "data_dir": "../data",
+  "baselines_dir": "../models/baselines",
+  "output_dir": "outputs/checkpointed/evaluation",
+  "reference_results": "../figures/paper/results.json",
+  "seed": 0
+}

@@ -1,0 +1,171 @@
+{
+  "mu_from": "delta",
+  "held_out_topics": true,
+  "docs_per_language": 1000,
+  "majority_baseline": {
+    "language": 0.2,
+    "newsgroup": 0.054,
+    "lda_top_topic": 0.126
+  },
+  "language_right_of_1000": {
+    "English": 1000,
+    "German": 998,
+    "French": 999,
+    "Spanish": 999,
+    "Chinese": 999
+  },
+  "language_right_worst_newsgroup": {
+    "comp.sys.mac.hardware": 0.988
+  },
+  "language_right_share": {
+    "trained newsgroups": 0.9984,
+    "held-out newsgroups": 0.9996
+  },
+  "latent_probes": {
+    "mu": {
+      "language": 0.999,
+      "newsgroup": 0.033,
+      "lda_top_topic": 0.126
+    },
+    "softmax(mu)": {
+      "language": 0.999,
+      "newsgroup": 0.027,
+      "lda_top_topic": 0.126
+    },
+    "sampled z": {
+      "language": 0.998,
+      "newsgroup": 0.034,
+      "lda_top_topic": 0.126
+    },
+    "mu, held-out newsgroups only": {
+      "newsgroup": 0.065,
+      "lda_top_topic": 0.163
+    }
+  },
+  "writing": {
+    "English": {
+      "from each document's z": {
+        "written_language": {
+          "en": 985,
+          "other": 9,
+          "fr": 3,
+          "es": 2,
+          "de": 1
+        },
+        "in the input language": 985,
+        "out_of": 1000
+      },
+      "from the language's mean mu": {
+        "written_language": {
+          "en": 200
+        },
+        "in that language": 200,
+        "out_of": 200
+      }
+    },
+    "German": {
+      "from each document's z": {
+        "written_language": {
+          "de": 992,
+          "fr": 3,
+          "other": 3,
+          "en": 2
+        },
+        "in the input language": 992,
+        "out_of": 1000
+      },
+      "from the language's mean mu": {
+        "written_language": {
+          "de": 199,
+          "other": 1
+        },
+        "in that language": 199,
+        "out_of": 200
+      }
+    },
+    "French": {
+      "from each document's z": {
+        "written_language": {
+          "fr": 988,
+          "other": 9,
+          "es": 2,
+          "en": 1
+        },
+        "in the input language": 988,
+        "out_of": 1000
+      },
+      "from the language's mean mu": {
+        "written_language": {
+          "fr": 199,
+          "en": 1
+        },
+        "in that language": 199,
+        "out_of": 200
+      }
+    },
+    "Spanish": {
+      "from each document's z": {
+        "written_language": {
+          "es": 984,
+          "other": 7,
+          "fr": 5,
+          "en": 4
+        },
+        "in the input language": 984,
+        "out_of": 1000
+      },
+      "from the language's mean mu": {
+        "written_language": {
+          "es": 198,
+          "en": 2
+        },
+        "in that language": 198,
+        "out_of": 200
+      }
+    },
+    "Chinese": {
+      "from each document's z": {
+        "written_language": {
+          "zh": 966,
+          "en": 17,
+          "other": 14,
+          "de": 2,
+          "fr": 1
+        },
+        "in the input language": 966,
+        "out_of": 1000
+      },
+      "from the language's mean mu": {
+        "written_language": {
+          "zh": 197,
+          "en": 2,
+          "other": 1
+        },
+        "in that language": 197,
+        "out_of": 200
+      }
+    }
+  },
+  "readout_probes": {
+    "plain Qwen h_off": {
+      "language": 0.991,
+      "newsgroup": 0.466,
+      "lda_top_topic": 0.379
+    },
+    "this run, delta readout": {
+      "language": 0.999,
+      "newsgroup": 0.253,
+      "lda_top_topic": 0.274
+    },
+    "random LoRA, Delta h": {
+      "language": 0.971,
+      "newsgroup": 0.189,
+      "lda_top_topic": 0.212
+    },
+    "paper (topic guide), delta readout": {
+      "language": 0.984,
+      "newsgroup": 0.533,
+      "lda_top_topic": 0.524
+    }
+  }
+}

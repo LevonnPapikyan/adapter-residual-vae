@@ -1,0 +1,35 @@
+[project]
+name = "adapter-residual-vae"
+version = "0.1.0"
+description = "A VAE on a frozen language model whose latent is read from the adapter residual and aligned to a reference such as LDA topics or the language label."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "joblib==1.6.0",
+    "matplotlib==3.10.9",
+    "nbformat==5.11.1",
+    "numpy==2.2.6",
+    "peft==0.20.0",
+    "scikit-learn==1.7.2",
+    "scipy==1.15.3",
+    "spacy==3.8.18",
+    "torch==2.11.0",
+    "transformers==5.16.1",
+]
+
+[project.optional-dependencies]
+test = ["pytest==9.1.1"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["core*", "experiments*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = [
+    "needs_model: loads the cached Qwen weights, takes minutes on one CPU thread",
+]

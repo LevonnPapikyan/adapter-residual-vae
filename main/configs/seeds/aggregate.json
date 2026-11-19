@@ -1,0 +1,12 @@
+{
+  "seeds_dir": "outputs/seeds",
+  "seeds": [1, 2, 3, 4, 5],
+  "output_dir": "outputs/seeds",
+  "original_evaluation": "outputs/checkpointed/evaluation_original",
+  "original_runs": "../models/final_0.5b",
+  "original_log": "outputs/checkpointed/logs/evaluate_original.*.out",
+  "retrain_evaluation": "outputs/checkpointed/evaluation",
+  "retrain_runs": "outputs/checkpointed",
+  "retrain_log": "outputs/checkpointed/logs/evaluate.*.out",
+  "shipped_results": "../figures/paper/results.json"
+}

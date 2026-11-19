@@ -1,0 +1,18 @@
+{
+  "runs_dir": "../models/final_0.5b",
+  "base_model": "Qwen/Qwen2.5-0.5B",
+  "data_dir": "../data",
+  "baselines_dir": "../models/baselines",
+  "output_dir": "outputs/small_cpu_example/evaluation",
+  "reference_results": "../figures/paper/results.json",
+  "seed": 0,
+  "max_docs": 5,
+  "max_train_texts": 12,
+  "max_generation_texts": 4,
+  "encoder_max_tokens": 32,
+  "linear_map_steps": 5,
+  "generation_per_topic": 1,
+  "generation_max_new_tokens": 4,
+  "skip_layers": false,
+  "skip_generation": false
+}

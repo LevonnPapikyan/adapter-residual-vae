@@ -1,0 +1,17 @@
+{
+  "runs_dir": "outputs/checkpointed/smoke/small",
+  "data_dir": "../data",
+  "output_dir": "outputs/checkpointed/smoke/small",
+  "batch_size": 4,
+  "train_sample": 8,
+  "train_sample_seed": 0,
+  "map_steps": [0, 2, 4, 6],
+  "tsne_perplexity": 30.0,
+  "tsne_seed": 0,
+  "pca_dims": 50,
+  "max_docs": 12,
+  "max_train_texts": 64,
+  "encoder_max_tokens": 32,
+  "saved_runs_dir": "../models/final_0.5b",
+  "reference_results": "../figures/paper/results.json"
+}

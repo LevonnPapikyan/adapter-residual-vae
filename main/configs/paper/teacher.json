@@ -1,0 +1,8 @@
+{
+  "data_dir": "../data",
+  "output_dir": "outputs/teacher",
+  "num_topics": 20,
+  "num_passes": 100,
+  "lda_seed": 42,
+  "min_words": 5
+}

@@ -1,0 +1,24 @@
+# Data and trained weights are published separately (see data/README.md and models/README.md)
+data/*
+!data/README.md
+models/*
+!models/README.md
+extensions/*/runs/
+extensions/multilingual_decode/data/
+main/outputs/
+*.pt
+*.joblib
+
+# Notebooks are built from their .py sources
+*.ipynb
+
+# Python, LaTeX and system files
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+*.aux
+*.log
+slurm-*.out
+.DS_Store
+._*

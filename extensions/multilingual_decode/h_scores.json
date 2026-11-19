@@ -1,0 +1,184 @@
+{
+  "mu_from": "h",
+  "majority_baseline": 126,
+  "detector_check": {
+    "English": 995,
+    "German": 988,
+    "French": 988,
+    "Spanish": 976,
+    "Chinese": 978
+  },
+  "this run (all languages)": {
+    "topic_argmax_mu": {
+      "English": 702,
+      "German": 133,
+      "French": 128,
+      "Spanish": 130,
+      "Chinese": 161
+    },
+    "language_score": 0.858,
+    "writing": {
+      "English": {
+        "written_language": {
+          "en": 732,
+          "es": 102,
+          "de": 76,
+          "fr": 62,
+          "zh": 22,
+          "other": 6
+        },
+        "writes_the_input_language": 732,
+        "english_texts": 732,
+        "lda_topic_right_among_english_texts": 88,
+        "round_trip_topic_right": 106,
+        "nll_own_z": 3.4641,
+        "nll_plain_qwen": 3.6066,
+        "out_of": 1000
+      },
+      "German": {
+        "written_language": {
+          "fr": 320,
+          "es": 304,
+          "de": 227,
+          "en": 68,
+          "zh": 63,
+          "other": 18
+        },
+        "writes_the_input_language": 227,
+        "english_texts": 68,
+        "lda_topic_right_among_english_texts": 5,
+        "round_trip_topic_right": 73,
+        "nll_own_z": 3.4127,
+        "nll_plain_qwen": 3.6895,
+        "out_of": 1000
+      },
+      "French": {
+        "written_language": {
+          "es": 321,
+          "fr": 315,
+          "de": 225,
+          "en": 78,
+          "zh": 53,
+          "other": 8
+        },
+        "writes_the_input_language": 315,
+        "english_texts": 78,
+        "lda_topic_right_among_english_texts": 6,
+        "round_trip_topic_right": 64,
+        "nll_own_z": 3.0996,
+        "nll_plain_qwen": 3.3215,
+        "out_of": 1000
+      },
+      "Spanish": {
+        "written_language": {
+          "fr": 315,
+          "es": 303,
+          "de": 211,
+          "en": 83,
+          "zh": 72,
+          "other": 16
+        },
+        "writes_the_input_language": 303,
+        "english_texts": 83,
+        "lda_topic_right_among_english_texts": 5,
+        "round_trip_topic_right": 60,
+        "nll_own_z": 3.2693,
+        "nll_plain_qwen": 3.5139,
+        "out_of": 1000
+      },
+      "Chinese": {
+        "written_language": {
+          "zh": 488,
+          "es": 163,
+          "fr": 146,
+          "de": 119,
+          "en": 72,
+          "other": 12
+        },
+        "writes_the_input_language": 488,
+        "english_texts": 72,
+        "lda_topic_right_among_english_texts": 6,
+        "round_trip_topic_right": 56,
+        "nll_own_z": 4.1358,
+        "nll_plain_qwen": 4.5249,
+        "out_of": 1000
+      }
+    }
+  },
+  "paper h, seed 0 (English only)": {
+    "topic_argmax_mu": {
+      "English": 694,
+      "German": 403,
+      "French": 535,
+      "Spanish": 412,
+      "Chinese": 598
+    },
+    "language_score": 0.732,
+    "writing": {
+      "English": {
+        "written_language": {
+          "en": 997,
+          "other": 2,
+          "es": 1
+        },
+        "writes_the_input_language": 997,
+        "english_texts": 997,
+        "lda_topic_right_among_english_texts": 346,
+        "round_trip_topic_right": 362,
+        "nll_own_z": 3.3854,
+        "nll_plain_qwen": 3.6066,
+        "out_of": 1000
+      },
+      "German": {
+        "written_language": {
+          "en": 1000
+        },
+        "writes_the_input_language": 0,
+        "english_texts": 1000,
+        "lda_topic_right_among_english_texts": 239,
+        "round_trip_topic_right": 261,
+        "nll_own_z": 3.6557,
+        "nll_plain_qwen": 3.6895,
+        "out_of": 1000
+      },
+      "French": {
+        "written_language": {
+          "en": 998,
+          "other": 2
+        },
+        "writes_the_input_language": 0,
+        "english_texts": 998,
+        "lda_topic_right_among_english_texts": 260,
+        "round_trip_topic_right": 256,
+        "nll_own_z": 3.2754,
+        "nll_plain_qwen": 3.3215,
+        "out_of": 1000
+      },
+      "Spanish": {
+        "written_language": {
+          "en": 997,
+          "other": 3
+        },
+        "writes_the_input_language": 0,
+        "english_texts": 997,
+        "lda_topic_right_among_english_texts": 251,
+        "round_trip_topic_right": 278,
+        "nll_own_z": 3.456,
+        "nll_plain_qwen": 3.5139,
+        "out_of": 1000
+      },
+      "Chinese": {
+        "written_language": {
+          "en": 1000
+        },
+        "writes_the_input_language": 0,
+        "english_texts": 1000,
+        "lda_topic_right_among_english_texts": 321,
+        "round_trip_topic_right": 338,
+        "nll_own_z": 4.4991,
+        "nll_plain_qwen": 4.5249,
+        "out_of": 1000
+      }
+    }
+  }
+}
