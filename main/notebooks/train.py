@@ -43,8 +43,7 @@ from experiments.factorization import figures
 from experiments.factorization.config import train_config_from_file
 from experiments.factorization.train import train_or_load
 
-# The only things to change. The 1.5B pair is factorization_h_1.5b.json and factorization_delta_1.5b.json;
-# configs/small_cpu_example has the same two files with a few texts and short sequences.
+# The only things to change. configs/small_cpu_example has the same two files with a few texts and short sequences.
 # "factorization" saves no checkpoints; CONFIG_PREFIX = "checkpointed" trains the same recipes with them.
 CONFIG_DIR = Path(os.environ.get("VAE_CONFIG_DIR", "configs/paper"))
 CONFIG_PREFIX = os.environ.get("VAE_CONFIG_PREFIX", "factorization")

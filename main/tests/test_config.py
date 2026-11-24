@@ -38,7 +38,6 @@ def test_small_configs_parse(name: str) -> None:
 
 def test_evaluation_configs_parse() -> None:
     assert parse_evaluation_config(["--config", str(PAPER / "evaluation.json")]).is_partial is False
-    assert parse_evaluation_config(["--config", str(PAPER / "evaluation_1.5b.json")]).base_model == "Qwen/Qwen2.5-1.5B"
     assert parse_evaluation_config(["--config", str(SMALL / "evaluation.json")]).is_partial is True
 
 
@@ -122,8 +121,6 @@ def test_saved_config_round_trip() -> None:
     [
         ("final_0.5b/h", "factorization_h.json"),
         ("final_0.5b/delta", "factorization_delta.json"),
-        ("final_1.5b/h", "factorization_h_1.5b.json"),
-        ("final_1.5b/delta", "factorization_delta_1.5b.json"),
     ],
 )
 def test_paper_configs_are_the_saved_recipes(run: str, config_name: str) -> None:

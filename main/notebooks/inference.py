@@ -16,7 +16,7 @@
 # ## 0. Setup
 #
 # The config at the top is the only thing to change: `configs/paper/evaluation_checkpointed.json` is the retrained pair
-# with checkpoints, and `configs/paper/evaluation_1.5b.json` is the 1.5B pair.
+# with checkpoints.
 
 # %%
 import json
@@ -241,7 +241,7 @@ comparison = write_comparison(output_dir=output_dir, results=json.loads(json.dum
                               reference_path=config.reference_results, is_partial=config.is_partial)
 
 # %% [markdown]
-# **Caveats.** One seed per model; the README gives the spread over seeds 1 to 5. The other languages are machine translations of the test posts, not native text.
+# **Caveats.** One seed per model; the paper reports the mean over five seeds. The other languages are machine translations of the test posts, not native text.
 # "Right" means "agrees with LDA", including LDA's own mistakes.
 
 # %% [markdown]
@@ -251,7 +251,7 @@ comparison = write_comparison(output_dir=output_dir, results=json.loads(json.dum
 # `python -m experiments.factorization.trajectory --config configs/paper/trajectory.json` made of them, all read from
 # `outputs/checkpointed/` whichever config is at the top of this notebook. Scores and maps are read from that job's results;
 # nothing is encoded again except the one followed document at the chosen step. Each cell skips itself with a message when
-# its files do not exist yet. See "Checkpoints and the trajectory" in the README.
+# its files do not exist yet. See "Paper experiment configurations" in the README.
 #
 # The weights were trained in bfloat16. Everything here is float32, because at small Δh the bfloat16 Δh and μ are mostly
 # rounding. Rounding is largest there but not gone at the kept step: the table below gives both formats. One seed.

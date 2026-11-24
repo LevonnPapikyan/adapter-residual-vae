@@ -2,7 +2,6 @@
 name = "adapter-residual-vae"
 version = "0.1.0"
 description = "A VAE on a frozen language model whose latent is read from the adapter residual and aligned to a reference such as LDA topics or the language label."
-readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "joblib==1.6.0",

@@ -1,86 +1,116 @@
-# adapter-residual-vae
+# Lightweight Factor Isolation and Composition in Frozen LLMs via Aligned Adapter-Residual Variational Autoencoders
 
-Code for "Isolating Latent Dimensions in Language Models with Adapter-Residual Variational Autoencoders".
+This repository contains the code associated with the paper *Lightweight Factor Isolation and Composition in Frozen LLMs via Aligned Adapter-Residual Variational Autoencoders*.
 
-A frozen language model (Qwen2.5) is turned into a variational autoencoder with two LoRA adapters: one for the encoder
-and one for a prefix-conditioned generator. The latent is aligned to a reference, such as LDA topic mixtures or the
-language label. The point of the method is where the latent is read from:
-
-- **adapter result**: the last hidden state of the adapted model, $h_{\text{on}}$;
-- **adapter residual**: what the adapter adds to the frozen model on the same input, $\Delta h = h_{\text{on}} - h_{\text{off}}$.
-
-Aligned to English LDA topics and trained on English only, the adapter residual filters language information out of the latent, allowing it to effectively perform zero-shot topic transfer to German, French, Spanish and Chinese documents.
-
-## Results in short
-
-1,000 test posts of 20 Newsgroups in five languages (the non-English versions are machine translations), Qwen2.5-0.5B,
-mean of five seeds. Language: accuracy of a linear probe on the latent, lower is better (chance 0.20). Topic: share of
-posts whose largest latent coordinate is LDA's top topic of the English original (always the most common topic: 0.126).
-
-| latent read from | language | English | German | French | Spanish | Chinese |
-|---|---|---|---|---|---|---|
-| adapter result | 0.72 | 0.68 | 0.44 | 0.53 | 0.47 | 0.56 |
-| adapter residual | 0.37 | 0.64 | 0.54 | 0.56 | 0.58 | 0.58 |
-| frozen model + linear map | 0.80 | 0.51 | 0.21 | 0.22 | 0.20 | 0.29 |
-
-With two adapter residuals of one frozen model, one aligned to the topic and one to the language (one seed), the topic
-latent holds the language at 0.22 and the language latent holds the topic at chance, and the generator writes in a
-chosen language (98.5 to 100% of texts) about a chosen topic group.
-
-## Layout
-
-| Folder | What it holds |
-|---|---|
-| `main/` | the model, training, evaluation, baselines, configs and tests. Its own `README.md` documents every setting. |
-| `extensions/language_latent/` | the latent aligned to the language label |
-| `extensions/two_latents/` | a topic latent and a language latent at once, and generation from a chosen topic and language |
-| `extensions/sweeps/` | the model with one setting changed per run ($\beta$, $\lambda$, LoRA rank), and one scoring routine for any saved model |
-| `extensions/multilingual_decode/` | a generator trained on five languages; the other extensions use its language detector and its translated training posts |
-| `figures/` | scripts and small data files that draw the figures; `figures/paper/` holds reference results |
-| `data/`, `models/` | not tracked; their `README.md` say which files go there |
+> ***Abstract.*** The hidden states of large language models (LLMs) encode rich semantic and stylistic attributes, yet these factors remain deeply entangled within a single activation space. We introduce a framework for isolating and controlling specific, interpretable dimensions such as document topic and language from frozen pretrained LLMs. Our approach builds a variational autoencoder (VAE) using two lightweight LoRA adapters attached to a frozen Qwen2.5 backbone as an encoder and a prefix-conditioned decoder. Because standard variational objectives leave the latent space under-specified, we anchor the latents to external reference distributions, such as English LDA topic mixtures or one-hot language labels. Rather than reading the latent directly from the adapted final hidden state $h_{\text{on}}$, we read it from the adapter residual $\Delta h = h_{\text{on}} - h_{\text{off}}$ introduced by the adapter relative to the frozen base model, filtering the representation to retain only the target attribute. Aligned solely to English LDA topics, the latent $\mu$ generated from $\Delta h$ reduces language predictability from 72\% to 37\% and improves zero-shot cross-lingual topic transfer on machine-translated German, French, Spanish, and Chinese documents. Training parallel topic and language $\Delta h$ encoders jointly with a shared LoRA decoder allows for the generation of orthogonal topic and language latents, enabling simultaneous, disentangled control over both content and generation language.
 
 ## Setup
 
-Python 3.10 or newer and one GPU with 24 GB or more for training.
+Python 3.10 or newer. From the `main/` folder:
 
 ```bash
 cd main
 pip install ".[test]"
+export TOKENIZERS_PARALLELISM=false
+```
+
+`main/pyproject.toml` pins the package versions. The data and the trained weights are not in the repository; `data/README.md` and `models/README.md` list the files and how each is made.
+
+All commands below run from `main/`, and all paths in the configs are relative to it: `../data` and `../models` are read, and everything new goes to `outputs/`.
+
+## Small CPU example
+
+A few texts, short sequences and one epoch, on one CPU thread:
+
+```bash
+export CUDA_VISIBLE_DEVICES="" OMP_NUM_THREADS=1
+python -m experiments.factorization.train --config configs/small_cpu_example/factorization_delta.json
+python -m experiments.factorization.evaluate --config configs/small_cpu_example/evaluation.json
 python -m pytest tests
 ```
 
-Tests that need the trained weights or the data skip themselves when those are missing.
+The evaluation reads the saved weights in `../models/final_0.5b`. Tests that need the weights or the data skip themselves when those are missing.
 
-## Reproducing
+## Configuration
 
-All commands run from `main/`; every path in a config is relative to it.
+Training and evaluation take a JSON file through `--config PATH`. Command-line options override values in the file, and an unknown key is an error.
 
-| What | Command |
-|---|---|
-| Train the pair (adapter result, adapter residual) | `python -m experiments.factorization.train --config configs/paper/factorization_h.json`, then `factorization_delta.json` |
-| Every score and figure of a pair | `python -m experiments.factorization.evaluate --config configs/paper/evaluation.json` |
-| Five seeds and their summary | the configs in `configs/seeds/`, then `python -m experiments.factorization.aggregate_seeds --config configs/seeds/aggregate.json` |
-| The same on Qwen2.5-1.5B | `configs/paper/factorization_{h,delta}_1.5b.json`, `configs/paper/evaluation_1.5b.json` |
-| Language latent | `python -u ../extensions/language_latent/train_language_guide.py --config ../extensions/language_latent/delta.json` |
-| Two latents | `python -u ../extensions/two_latents/train_two_latents.py --config ../extensions/two_latents/main.json` |
-| Generation grid (topic group by language) | `python -u ../extensions/two_latents/group_grid.py` |
-| One sweep run | `python -u ../extensions/sweeps/train_and_score.py --config ../extensions/sweeps/configs/beta_0.1.json` |
-| Score any saved model | `python -u ../extensions/sweeps/train_and_score.py --score-only ../models/final_0.5b/delta --name paper_delta` |
-| Figures | `python figures/plot_latent_space.py`, `plot_two_latents.py`, `plot_heatmaps.py` (from the repository root, no GPU) |
+- `base_model`, `num_topics`, `teacher`, `min_words`: the language model, the latent dimension, the LDA file in `data_dir`, and how many LDA words a training document needs.
+- `mu_from` selects the readout: `"h"` is the adapter result $h_{\text{on}}$, and `"delta"` is the adapter residual $\Delta h = h_{\text{on}} - h_{\text{off}}$. This is the only difference between the two single-attribute models of the paper.
+- `lam` weights the alignment term and `beta` weights the KL term. The paper uses `lam = 1.0` and `beta = 0.5`.
+- `lora_rank` sets the LoRA rank of the encoder and the decoder; alpha is always twice the rank. The paper uses rank 16.
+- `lr_encoder_lora`, `lr_decoder_lora`, `lr_linear_maps`: the three AdamW learning rates.
+- `num_epochs`, `batch_size`, `val_frac`, `encoder_max_tokens`, `decoder_max_tokens`, `seed`: the rest of the recipe.
+- `data_dir`, `output_dir`, `device`, `log_every`: where and how a run goes.
+- `checkpoint_steps` (training) saves the trained tensors at the listed steps.
+- `max_train_texts`, `max_test_docs`, `max_steps` (training) and `max_docs`, `max_generation_texts`, `skip_layers`, `skip_generation` (evaluation) shorten a run for testing. Left unset they change nothing.
 
-The extension scripts need `PYTHONPATH` to include `main/`. The `run.sbatch` next to each script and the files in
-`main/slurm/` are Slurm templates: edit the `#SBATCH` lines for your cluster and set `VAE_ENV_ACTIVATE` to a script
-that activates the Python environment.
+## Paper experiment configurations
 
-One training run of the 0.5B model takes about 30 minutes on an A100. Training is not bit-reproducible: reruns of the
-same seed differ, and scores of the same weights move by a few documents between GPU types.
+Fit the LDA reference, train the adapter-result and adapter-residual models on Qwen2.5-0.5B, and evaluate the pair:
 
-## Limits
+```bash
+python -m experiments.data.teacher --config configs/paper/teacher.json
+python -m experiments.factorization.train --config configs/paper/factorization_h.json
+python -m experiments.factorization.train --config configs/paper/factorization_delta.json
+python -m experiments.factorization.evaluate --config configs/paper/evaluation.json
+```
 
-- One dataset (20 Newsgroups), and all non-English text is machine translation (Marian).
-- The reference for the topic is LDA with 20 topics, so "topic right" means agreement with LDA.
-- The language-latent and two-latent results are one seed each.
+The five seeds use the configs in `configs/seeds/` (`seed_{1..5}_{h,delta}.json`, `evaluation_seed_{1..5}.json`), and their summary is:
 
-## License and citation
+```bash
+python -m experiments.factorization.aggregate_seeds --config configs/seeds/aggregate.json
+```
 
-MIT, see `LICENSE`. To cite the code, use `CITATION.cff` (GitHub shows it under "Cite this repository").
+The training-step analysis trains the same two recipes with checkpoints and then reads every checkpoint:
+
+```bash
+python -m experiments.factorization.train --config configs/paper/checkpointed_h.json
+python -m experiments.factorization.train --config configs/paper/checkpointed_delta.json
+python -m experiments.factorization.trajectory --config configs/paper/trajectory.json
+```
+
+The evaluation also scores the baselines of the paper: LDA on the translated text, and frozen Qwen with a linear map. The latter runs alone with `python -m experiments.baselines.frozen_linear_map`.
+
+The model with parallel topic and language residuals lives in `extensions/two_latents/`. Its scripts need `PYTHONPATH` to include `main/`:
+
+```bash
+python -u ../extensions/multilingual_decode/translate_train.py
+python -u ../extensions/two_latents/train_two_latents.py --config ../extensions/two_latents/main.json
+python -u ../extensions/two_latents/group_grid.py
+```
+
+The first command translates the training documents into French, Spanish and Chinese. The second trains the two encoders and the shared decoder. The third writes texts for every pair of topic group and language and scores them. `extensions/multilingual_decode/` also holds the language detector that these scripts use.
+
+The provided configurations are starting points; they do not specify every experiment reported in the paper. Training is not bit-reproducible: reruns of the same seed differ, and scores of the same weights move by a few documents between GPU types.
+
+## Evaluation
+
+**Topic accuracy** is the share of test documents whose largest coordinate of $\mu$ is the top LDA topic of the English original. It is computed separately for the English documents and for their German, French, Spanish and Chinese translations.
+
+**Language accuracy** is the accuracy of a linear probe that predicts the document's language from $\text{softmax}(\mu)$, with 5-fold cross-validation in which all five versions of a document fall into the same fold. Chance is 0.20, and lower means less language in the latent.
+
+**Top-$k$ topic retrieval** is the share of test documents whose top LDA topic is among the $k$ largest coordinates of $\mu$.
+
+**Compositional generation** takes the mean $\mu_{\text{topic}}$ of a topic group and the mean $\mu_{\text{lang}}$ of a language and lets the decoder write 50 texts. A text counts as on topic if, after translation back to English, its top LDA topic belongs to the chosen group, and as in the right language if the language detector returns the chosen language. The same judge on real test documents gives the ceiling.
+
+## Outputs
+
+- Training writes `model.pt` (the trained tensors and the config), `history.json` (loss parts per step) and `test.json` (held-out loss and test scores per epoch) beneath its `output_dir`.
+- Evaluation writes `results.json`, `comparison.json`, `environment.json` and its figures beneath its `output_dir`. `comparison.json` is the difference to `figures/paper/results.json`, the scores of the released seed 0 weights.
+- The trajectory command writes `results.json`, a cache in `features/` and its figures beneath its `output_dir`.
+- The two-latent scripts write `model.pt`, scores, written samples and the generation grid next to their config.
+
+## Citation
+
+```bibtex
+@misc{papikyan2026lightweight,
+  title  = {Lightweight Factor Isolation and Composition in Frozen LLMs via Aligned Adapter-Residual Variational Autoencoders},
+  author = {Papikyan, Levon and Lichtman, Elliot and Lafferty, John},
+  year   = {2026},
+}
+```
+
+## License
+
+This code is licensed under the MIT License.
