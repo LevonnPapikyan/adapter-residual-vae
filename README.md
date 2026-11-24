@@ -9,8 +9,7 @@ language label. The point of the method is where the latent is read from:
 - **adapter result**: the last hidden state of the adapted model, $h_{\text{on}}$;
 - **adapter residual**: what the adapter adds to the frozen model on the same input, $\Delta h = h_{\text{on}} - h_{\text{off}}$.
 
-Aligned to English LDA topics and trained on English only, the adapter residual gives a latent that holds much less of
-the input language and transfers the topics to German, French, Spanish and Chinese text.
+Aligned to English LDA topics and trained on English only, the adapter residual filters language information out of the latent, allowing it to effectively perform zero-shot topic transfer to German, French, Spanish and Chinese documents.
 
 ## Results in short
 
