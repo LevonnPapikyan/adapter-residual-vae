@@ -137,7 +137,7 @@ def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(description="An LDA trained on German text.")
     parser.add_argument("--data-dir", default="../data")
     parser.add_argument("--output-dir", default="outputs/baselines")
-    parser.add_argument("--reference-results", default="../figures/paper/results.json")
+    parser.add_argument("--reference-results", default="configs/paper/reference_results.json")
     args = parse_args_with_config(parser, argv)
     run_german_lda(config=GermanLDAConfig(data_dir=args.data_dir, output_dir=args.output_dir, reference_results=args.reference_results))
 

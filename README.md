@@ -97,7 +97,7 @@ The provided configurations are starting points; they do not specify every exper
 ## Outputs
 
 - Training writes `model.pt` (the trained tensors and the config), `history.json` (loss parts per step) and `test.json` (held-out loss and test scores per epoch) beneath its `output_dir`.
-- Evaluation writes `results.json`, `comparison.json`, `environment.json` and its figures beneath its `output_dir`. `comparison.json` is the difference to `figures/paper/results.json`, the scores of the released seed 0 weights.
+- Evaluation writes `results.json`, `comparison.json`, `environment.json` and its figures beneath its `output_dir`. `comparison.json` is the difference to `main/configs/paper/reference_results.json`, the scores of the released seed 0 weights.
 - The trajectory command writes `results.json`, a cache in `features/` and its figures beneath its `output_dir`.
 - The two-latent scripts write `model.pt`, scores, written samples and the generation grid next to their config.
 

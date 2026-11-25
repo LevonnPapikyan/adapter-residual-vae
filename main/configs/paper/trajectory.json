@@ -10,5 +10,5 @@
   "tsne_seed": 0,
   "pca_dims": 50,
   "saved_runs_dir": "../models/final_0.5b",
-  "reference_results": "../figures/paper/results.json"
+  "reference_results": "configs/paper/reference_results.json"
 }

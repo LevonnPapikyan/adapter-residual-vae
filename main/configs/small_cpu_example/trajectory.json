@@ -13,5 +13,5 @@
   "max_train_texts": 64,
   "encoder_max_tokens": 32,
   "saved_runs_dir": "../models/final_0.5b",
-  "reference_results": "../figures/paper/results.json"
+  "reference_results": "configs/paper/reference_results.json"
 }

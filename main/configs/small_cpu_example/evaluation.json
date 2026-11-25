@@ -4,7 +4,7 @@
   "data_dir": "../data",
   "baselines_dir": "../models/baselines",
   "output_dir": "outputs/small_cpu_example/evaluation",
-  "reference_results": "../figures/paper/results.json",
+  "reference_results": "configs/paper/reference_results.json",
   "seed": 0,
   "max_docs": 5,
   "max_train_texts": 12,

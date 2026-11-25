@@ -78,7 +78,7 @@ def coverage_notes(*, seeds: Sequence[int], paired_topic: Mapping[str, Any], sam
         ),
         "gpu_rounding": (
             f"It does not cover rounding that may differ by GPU type: every seed ran on an A100. The same weights differ by up to {same_weights_move} documents on a trained-model score, "
-            f"and the frozen baseline by up to {frozen_move}, between `evaluation_original` and the shipped `../figures/paper/results.json`. A comment in `slurm/evaluate.sbatch` puts this down to GPU type; "
+            f"and the frozen baseline by up to {frozen_move}, between `evaluation_original` and the shipped `configs/paper/reference_results.json`. A comment in `slurm/evaluate.sbatch` puts this down to GPU type; "
             "the H200 run that would test it, `outputs/checkpointed/evaluation_original_h200`, had not finished when this was written, so the cause is unconfirmed. "
             f"Seed margins inside that difference could change sign on another GPU type: {', '.join(inside) or 'none'}."
         ),
@@ -153,7 +153,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--retrain-evaluation", default="outputs/checkpointed/evaluation")
     parser.add_argument("--retrain-runs", default="outputs/checkpointed")
     parser.add_argument("--retrain-log", default="outputs/checkpointed/logs/evaluate.*.out")
-    parser.add_argument("--shipped-results", default="../figures/paper/results.json")
+    parser.add_argument("--shipped-results", default="configs/paper/reference_results.json")
     return parser
 
 

@@ -8,5 +8,5 @@
   "retrain_evaluation": "outputs/checkpointed/evaluation",
   "retrain_runs": "outputs/checkpointed",
   "retrain_log": "outputs/checkpointed/logs/evaluate.*.out",
-  "shipped_results": "../figures/paper/results.json"
+  "shipped_results": "configs/paper/reference_results.json"
 }

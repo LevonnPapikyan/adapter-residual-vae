@@ -4,6 +4,6 @@
   "data_dir": "../data",
   "baselines_dir": "../models/baselines",
   "output_dir": "outputs/checkpointed/evaluation_original",
-  "reference_results": "../figures/paper/results.json",
+  "reference_results": "configs/paper/reference_results.json",
   "seed": 0
 }
